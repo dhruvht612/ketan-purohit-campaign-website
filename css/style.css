@@ -562,7 +562,225 @@ button { font-family: inherit; cursor: pointer; }
   .cta-band__inner { flex-direction: column; text-align: center; }
 }
 
-/* ---------- 19. REDUCED MOTION ---------- */
+/* ---------- 19. STATS COUNTER BAR ---------- */
+.stats-bar {
+  background: var(--navy);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.stats-bar::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px,
+    transparent 1px, transparent 80px
+  );
+  pointer-events: none;
+}
+.stats-bar__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: clamp(28px, 4vw, 48px) clamp(16px, 2vw, 28px);
+  border-right: 1px solid rgba(255,255,255,.1);
+  position: relative;
+}
+.stat:last-child { border-right: none; }
+.stat::after {
+  content: "";
+  position: absolute; bottom: 0; left: 20%; right: 20%; height: 3px;
+  background: var(--gold); opacity: 0; border-radius: 2px 2px 0 0;
+  transition: opacity .3s var(--ease);
+}
+.stat:hover::after { opacity: 1; }
+.stat__num {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+.stat__suffix {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--gold-300);
+  margin-left: 2px;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.stat__numwrap { display: flex; align-items: flex-end; gap: 2px; line-height: 1; margin-bottom: 6px; }
+.stat__label {
+  font-size: clamp(.78rem, 1.4vw, .94rem);
+  color: #cdd7ea;
+  letter-spacing: .04em;
+  margin-top: 8px;
+  text-transform: uppercase;
+  font-family: var(--display);
+  font-weight: 500;
+  max-width: 14ch;
+  text-align: center;
+}
+
+/* ---------- 20. CAMPAIGN POSTER SHOWCASE ---------- */
+.poster-showcase {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 50%, #1a3a6e 100%);
+  padding: clamp(56px, 8vw, 100px) 0;
+  position: relative;
+  overflow: hidden;
+}
+.poster-showcase::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 10% 80%, rgba(232,165,28,.15) 0%, transparent 50%),
+    radial-gradient(circle at 90% 20%, rgba(192,31,45,.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+/* Dot-grid pattern */
+.poster-showcase::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.poster-showcase__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 6vw, 72px);
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.poster-showcase__copy { color: #fff; }
+.poster-showcase__copy .eyebrow { margin-bottom: 18px; }
+.poster-showcase__desc {
+  color: #cdd7ea;
+  font-size: 1.08rem;
+  max-width: 42ch;
+  margin-top: 20px;
+  line-height: 1.65;
+}
+.poster-gold { color: var(--gold); }
+.poster-showcase__pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 24px;
+}
+.pill {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #e9eef8;
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .78rem;
+  font-weight: 600;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.pill:hover { background: rgba(232,165,28,.2); border-color: var(--gold); }
+
+/* Poster frame */
+.poster-showcase__img { display: flex; justify-content: center; }
+.poster-frame {
+  position: relative;
+  max-width: 400px; width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 32px 64px -20px rgba(0,0,0,.7), 0 0 0 4px var(--gold), 0 0 0 8px rgba(232,165,28,.2);
+  transform: rotate(1.5deg);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.poster-frame:hover {
+  transform: rotate(0deg) translateY(-8px);
+  box-shadow: 0 44px 80px -24px rgba(0,0,0,.8), 0 0 0 4px var(--gold), 0 0 0 12px rgba(232,165,28,.25);
+}
+.poster-frame img {
+  width: 100%; height: auto;
+  display: block;
+}
+.poster-frame__badge {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0deg, rgba(12,29,64,.97) 0%, rgba(12,29,64,.7) 80%, transparent 100%);
+  padding: 32px 20px 18px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.poster-frame__vote {
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: .78rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.poster-frame__name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+.poster-frame__ward {
+  font-size: .78rem;
+  color: #cdd7ea;
+  margin-top: 4px;
+  letter-spacing: .06em;
+}
+
+/* Quote strip */
+.quote-strip {
+  background: var(--gold);
+  margin: 0; padding: clamp(22px, 4vw, 36px) 0;
+  text-align: center;
+}
+.quote-strip__text {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 3vw, 1.9rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--navy-900);
+  line-height: 1.2;
+}
+.quote-strip__text strong { color: var(--red); }
+.quote-strip__cite {
+  display: block;
+  font-family: var(--body);
+  font-style: normal;
+  font-size: .9rem;
+  color: var(--navy-800);
+  margin-top: 10px;
+  letter-spacing: .04em;
+}
+
+/* Responsive for new sections */
+@media (max-width: 860px) {
+  .stats-bar__grid { grid-template-columns: repeat(2, 1fr); }
+  .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
+  .stat:nth-last-child(-n+2) { border-bottom: none; }
+  .poster-showcase__inner { grid-template-columns: 1fr; }
+  .poster-showcase__copy { order: 2; }
+  .poster-showcase__img { order: 1; }
+  .poster-showcase__desc { max-width: 100%; }
+  .poster-frame { max-width: 320px; }
+}
+@media (max-width: 500px) {
+  .stats-bar__grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- 21. REDUCED MOTION ---------- */
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }

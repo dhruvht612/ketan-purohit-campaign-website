@@ -334,6 +334,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* -----------------------------------------------------------------
+     8b. STATS COUNTER ANIMATION
+  ----------------------------------------------------------------- */
+  function animateCounter(el, target, duration) {
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  if ("IntersectionObserver" in window) {
+    var statObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var numEl = entry.target.querySelector(".stat__num");
+          if (numEl) animateCounter(numEl, parseInt(numEl.dataset.target, 10), 1400);
+          statObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll(".stat").forEach(function (s) { statObs.observe(s); });
+  } else {
+    document.querySelectorAll(".stat__num").forEach(function (el) {
+      el.textContent = el.dataset.target;
+    });
+  }
+
+  /* -----------------------------------------------------------------
      9. BACK-TO-TOP BUTTON
   ----------------------------------------------------------------- */
   var toTop = document.getElementById("toTop");
